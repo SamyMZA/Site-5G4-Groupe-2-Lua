@@ -209,3 +209,365 @@ Resultat:
 Cet exercice t’aide à comprendre la logique de mouvement, la mise à jour d’une position, et l’importance du delta time.
 
 ---
+
+# 3. Déplacements & Input clavier
+Dans cette section, on apprend à contrôler un personnage avec le clavier, à appliquer un déplacement fluide grâce au `dt`, et à empêcher l’objet de sortir de l’écran. Ce sont les mécaniques fondamentales de presque tous les jeux 2D réalisés avec Love2D.  
+L’objectif est simple : comprendre comment lire les touches, modifier des positions, et utiliser la logique de mise à jour frame par frame pour obtenir un mouvement naturel et constant.
+
+---
+
+## 3.1 — Lire les touches avec love.keyboard.isDown
+
+Love2D permet de détecter en continu si une touche est enfoncée grâce à :
+
+```lua
+love.keyboard.isDown("touche")
+```
+
+Si une touche est maintenue, Love2D renvoie true.
+Cela permet un mouvement fluide, contrairement à love.keypressed qui ne détecte qu’un seul événement.
+
+Exemple de déplacement vertical :
+
+```lua
+if love.keyboard.isDown("w") then
+    player.y = player.y - player.speed * dt
+end
+if love.keyboard.isDown("s") then
+    player.y = player.y + player.speed * dt
+end
+```
+---
+
+## 3.2 — Exemple complet : déplacement WASD fluide
+
+Voici un projet complet qui gère la vitesse, le déplacement fluide, et le rendu à l’écran :
+
+```lua
+local player = {
+    x = 200,
+    y = 200,
+    speed = 200
+}
+
+function love.update(dt)
+    if love.keyboard.isDown("w") then
+        player.y = player.y - player.speed * dt
+    end
+    if love.keyboard.isDown("s") then
+        player.y = player.y + player.speed * dt
+    end
+    if love.keyboard.isDown("a") then
+        player.x = player.x - player.speed * dt
+    end
+    if love.keyboard.isDown("d") then
+        player.x = player.x + player.speed * dt
+    end
+end
+
+function love.draw()
+    love.graphics.circle("fill", player.x, player.y, 20)
+end
+
+```
+
+![alt text](wasd.gif)
+
+
+Ce code crée un joueur représenté par un cercle et lui permet de se déplacer librement dans toutes les directions en respectant le temps réel (dt).
+
+---
+## 3.3 — Déplacement diagonal
+
+Comme plusieurs touches peuvent être pressées simultanément, le personnage peut se déplacer en diagonale.
+
+Exemple :
+```txt
+
+w + d → haut droite
+
+w + a → haut gauche
+
+s + d → bas droite
+
+s + a → bas gauche
+```
+Ce comportement est automatiquement géré par le système sans rien de plus à faire.
+
+---
+## 3.4 — Empêcher le joueur de sortir de l’écran (Clamping)
+
+Pour éviter que le joueur disparaisse hors de la fenêtre, on vérifie constamment s’il dépasse les limites.
+
+```lua
+
+function clampPlayer()
+    local width = love.graphics.getWidth()
+    local height = love.graphics.getHeight()
+
+    if player.x < 20 then player.x = 20 end
+    if player.y < 20 then player.y = 20 end
+
+    if player.x > width - 20 then player.x = width - 20 end
+    if player.y > height - 20 then player.y = height - 20 end
+end
+```
+Puis dans love.update :
+'''lua
+clampPlayer()
+'''
+
+Ceci garantit que le joueur reste visible à l’écran en tout temps.
+
+---
+
+## 3.5 — Exemple complet avec clamping + déplacement
+
+Voici un exemple propre montrant un déplacement fluide + limites de l’écran :
+
+```lua
+
+local player = {
+    x = 200,
+    y = 200,
+    speed = 220,
+    radius = 20
+}
+
+local function clampPlayer()
+    local w = love.graphics.getWidth()
+    local h = love.graphics.getHeight()
+
+    if player.x < player.radius then player.x = player.radius end
+    if player.x > w - player.radius then player.x = w - player.radius end
+
+    if player.y < player.radius then player.y = player.radius end
+    if player.y > h - player.radius then player.y = h - player.radius end
+end
+
+function love.update(dt)
+    if love.keyboard.isDown("w") then
+        player.y = player.y - player.speed * dt
+    end
+    if love.keyboard.isDown("s") then
+        player.y = player.y + player.speed * dt
+    end
+    if love.keyboard.isDown("a") then
+        player.x = player.x - player.speed * dt
+    end
+    if love.keyboard.isDown("d") then
+        player.x = player.x + player.speed * dt
+    end
+
+    clampPlayer()
+end
+
+function love.draw()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.circle("fill", player.x, player.y, player.radius)
+end
+```
+
+![alt text](clamp.gif)
+
+Cet exemple reflète exactement la logique utilisée dans les vrais jeux : une boucle de mise à jour, un mouvement fluide, et un contrôle strict des limites.
+
+---
+
+## 3.6 — Exercices pour maîtriser cette section
+
+### Exercice 1 : Déplacement WASD
+
+Reprendre l’exemple et déplacer un carré plutôt qu’un cercle.
+
+---
+
+### Exercice 2 : Déplacement avec les flèches du clavier
+
+Remplacer WASD par :
+"up", "down", "left", "right"
+
+---
+
+
+### Exercice 3 : Vitesse variable
+
+Ajouter une touche (ex : Shift) qui double la vitesse.
+
+---
+
+
+### Exercice 4 : Empêcher de sortir de l’écran
+
+Écrire votre propre fonction clamp() pour pratiquer.
+
+---
+
+
+### Exercice 5 : Inverser les contrôles
+
+Quand on appuie sur “E”, inverser WASD pendant 3 secondes.
+
+---
+
+# 4. Collisions simples (rectangle vs rectangle)
+
+Cette section explique comment détecter une collision entre deux objets en 2D.  
+Dans Love2D, la méthode la plus utilisée pour les jeux débutants est la collision **AABB** (Axis Aligned Bounding Box), c’est-à-dire une collision entre deux rectangles alignés sur les axes.  
+C’est une méthode simple, rapide et suffisante pour la majorité des jeux 2D sans rotation.
+
+---
+
+## 4.1 — Comprendre la collision AABB
+
+Deux rectangles `A` et `B` sont en collision si **leurs bords se chevauchent sur les axes X et Y** en même temps.
+
+Love2D ne fournit pas de fonction toute faite, donc on crée notre propre fonction.
+
+---
+
+## 4.2 — Fonction de collision complète
+
+Voici le code que tout le monde utilise pour détecter une collision rectangle vs rectangle :
+
+```lua
+function checkCollision(a, b)
+    return  a.x < b.x + b.w and
+            b.x < a.x + a.w and
+            a.y < b.y + b.h and
+            b.y < a.y + a.h
+end
+```
+Si la fonction retourne true, alors il y a contact.
+
+---
+
+## 4.3 — Exemple complet : joueur vs obstacle
+
+Voici un petit projet entier montrant un joueur, un obstacle fixe, et un test de collision :
+
+```lua
+
+local player = { x = 50, y = 50, w = 40, h = 40, speed = 200 }
+local box = { x = 250, y = 120, w = 80, h = 80 }
+local message = ""
+
+function checkCollision(a, b)
+    return  a.x < b.x + b.w and
+            b.x < a.x + a.w and
+            a.y < b.y + b.h and
+            b.y < a.y + a.h
+end
+
+function love.update(dt)
+    if love.keyboard.isDown("w") then player.y = player.y - player.speed * dt end
+    if love.keyboard.isDown("s") then player.y = player.y + player.speed * dt end
+    if love.keyboard.isDown("a") then player.x = player.x - player.speed * dt end
+    if love.keyboard.isDown("d") then player.x = player.x + player.speed * dt end
+
+    if checkCollision(player, box) then
+        message = "Collision !"
+    else
+        message = ""
+    end
+end
+
+function love.draw()
+    -- joueur (bleu)
+    love.graphics.setColor(0, 0.4, 1)
+    love.graphics.rectangle("fill", player.x, player.y, player.w, player.h)
+
+    -- obstacle (rouge)
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle("fill", box.x, box.y, box.w, box.h)
+
+    -- message
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(message, 50, 20)
+end
+```
+![alt text](collision.gif)
+
+Ce programme affiche un carré bleu contrôlable et un carré rouge immobile.
+Lorsque les deux se touchent, le texte “Collision !” apparaît.
+
+---
+
+## 4.4 — Collision cercle vs cercle (optionnel)
+
+Si vous utilisez des cercles, voici la version collision circulaire :
+
+
+```lua
+
+function circleCollision(x1, y1, r1, x2, y2, r2)
+    local dx = x2 - x1
+    local dy = y2 - y1
+    local dist = math.sqrt(dx*dx + dy*dy)
+    return dist < r1 + r2
+end
+```
+
+Cette méthode est idéale pour les jeux avec boules, projectiles ou ennemis ronds.
+
+---
+
+## 4.5 — Exemple : joueur rond vs ennemi rond
+
+```lua
+
+local px, py, pr = 120, 200, 20
+local ex, ey, er = 300, 200, 30
+local hit = false
+
+function circleCollision(x1, y1, r1, x2, y2, r2)
+    local dx = x2 - x1
+    local dy = y2 - y1
+    local dist = math.sqrt(dx*dx + dy*dy)
+    return dist < r1 + r2
+end
+
+function love.update(dt)
+    if love.keyboard.isDown("right") then px = px + 200*dt end
+    if love.keyboard.isDown("left")  then px = px - 200*dt end
+
+    hit = circleCollision(px, py, pr, ex, ey, er)
+end
+
+function love.draw()
+    if hit then love.graphics.setColor(1, 0, 0) else love.graphics.setColor(0, 1, 0) end
+    love.graphics.circle("fill", px, py, pr)
+
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.circle("line", ex, ey, er)
+end
+```
+![alt text](pvo.gif)
+
+Si il y a une collision le joueur devient rouge.
+Sinon il reste vert.
+
+---
+
+## 4.6 — Exercices pour pratiquer
+### Exercice 1 : Détecter une collision entre joueur et un carré fixe
+
+Changer le message “Collision !” par “Touché !”.
+
+### Exercice 2 : Faire disparaître un carré lorsqu’on le touche
+
+Set box.visible = false.
+
+### Exercice 3 : Changer la couleur du joueur lorsqu’il touche l’obstacle
+
+Bleu par défaut, jaune en collision.
+
+### Exercice 4 : Collision ronde
+
+Créer un joueur rond + un obstacle rond et détecter la collision.
+
+### Exercice 5 : Ajouter plusieurs obstacles
+
+Créer un tableau obstacles = { ... } et tester tous les obstacles avec une boucle.
+
+---
