@@ -3,19 +3,20 @@ title = "Notes de cours - LUA"
 weight = 2
 +++
 
-Notes de cours sur votre sujet.
-
 ## Ques ce que LUA ?
 
-Lua est un langage de programmation polyvalent, créé par Bjarne Stroustrup pour etndare le language c a de la programmation orienté objet tout en gardant les performance du C.
-
-Lua est un langage de programmation léger, rapide et flexible, pensé pour être intégré à d’autres logiciels plutôt que d’être utilisé comme un langage autonome. Créé en 1993 au sein de l’Université Pontificale Catholique de Rio de Janeiro, Lua a gagné une popularité mondiale en raison de son efficacité, de sa simplicité et de sa capacité unique à s’intégrer dans des projets écrits en C et C++.
-
+Lua est un langage de programmation polyvalent, créé par Bjarne Stroustrup pour etandare le language c a de la programmation orienté objet tout en gardant les performance du C.
+il est léger, rapide et flexible, pensé pour être intégré à d’autres logiciels plutôt que d’être utilisé comme un langage autonome. Créé en 1993 au sein de l’Université Pontificale Catholique de Rio de Janeiro, Lua a gagné une popularité mondiale en raison de son efficacité, de sa simplicité et de sa capacité unique à s’intégrer dans des projets écrits en C et C++.
 Contrairement à des langages comme Python, Java ou C++, Lua n’a pas été conçu pour devenir un langage généraliste destiné à remplacer les autres. Sa philosophie repose sur une idée simple : fournir un petit noyau extrêmement performant et minimaliste que les développeurs peuvent étendre selon leurs besoins. C’est un langage pensé comme un couteau suisse du scripting, capable d’être embarqué dans des moteurs de jeux, des systèmes embarqués, des logiciels métiers, ou des environnements nécessitant un langage de configuration.
-
 Lua est apprécié pour sa petite taille, vitesse, facilité d'ntegration et sa syntaxe simple.
+Il se retrouve aujourd’hui dans des domaines aussi variés que l’industrie du jeu vidéo (Roblox, World of Warcraft, Angry Birds), les systèmes embarqués, la robotique, la cybersécurité, l’automatisation, et même les outils de configuration de Linux.
 
-Lua se retrouve aujourd’hui dans des domaines aussi variés que l’industrie du jeu vidéo (Roblox, World of Warcraft, Angry Birds), les systèmes embarqués, la robotique, la cybersécurité, l’automatisation, et même les outils de configuration de Linux.
+Il peut etre etendu grace a l'API C
+cela va permettre de gerer 2 truc distinct:
+
+1) Gestion de la mémoire : en C, l’allocation est manuelle, tandis que Lua utilise un ramasse-miettes. Les objets présents sur la pile ne sont pas collectés tant qu’ils y restent.
+
+2) Conversion des types : C utilise des types statiques, Lua des types dynamiques. L’API fournit des fonctions pour convertir les valeurs entre Lua et C.
 
 ---
 
@@ -136,6 +137,7 @@ Les opérateur en lua sont assez classique.
 
 Opérateurs arithmétiques:
 
+```
 +   addition
 -   soustraction
 *   multiplication
@@ -143,24 +145,25 @@ Opérateurs arithmétiques:
 %   modulo
 ^   puissance
 //  division entière
-
+```
 
 Opérateurs relationnels
 
+```
 ==  égal
 ~=  différent
 >   supérieur
 <   inférieur
 >=  supérieur ou égal
 <=  inférieur ou égal
-
+```
 
 Opérateurs logiques
-
+```
 and
 or
 not
-
+```
 
 BONUS : pour concatener (..  concaténation)
 
@@ -220,6 +223,37 @@ print(c())
 print(c()) 
 ```
 
+Entrées input
+
+Lua permet de lire des données depuis le terminal grâce à la fonction io.read(). On peut ainsi demander à l’utilisateur d’entrer son nom, son âge, ou n’importe quelle information. Par exemple :
+```lua
+print("Quel est ton nom ?")
+local name = io.read()
+print("Bonjour " .. name .. " !")
+
+print("Quel âge as-tu ?")
+local age = tonumber(io.read())  -- convertir en nombre
+if age >= 18 then
+    print("Tu es majeur.")
+else
+    print("Tu es mineur.")
+end
+```
+
+Ici, io.read() lit la ligne saisie par l’utilisateur. Comme Lua lit tout en texte, on utilise tonumber() pour convertir une chaîne en nombre.
+
+Sorties output
+
+Pour afficher des informations dans le terminal, on utilise la fonction print(). Elle peut afficher du texte, des nombres, ou même des résultats de calculs :
+```lua
+local x = 5
+local y = 7
+print("La somme de x et y est " .. (x + y))
+```
+
+Lua concatène les chaînes avec .., ce qui permet de mélanger texte et valeurs numériques facilement.
+
+
 Constructeur:
 
 ```lua
@@ -273,10 +307,13 @@ end
 
 
 Coté mathematique / logique :
-Comme en JavaScript et plein d'autre language, il y a, en Lua, un module math pour fair certain calculs directement.
-Par exemple, afficher le pi: 
+Comme en JavaScript et plein d'autre language, il y a, en Lua, un module math pour fair certain calculs directement : 
 ```lua
-print(math.pi) 
+print(math.pi)
+print(math.sqrt(16))
+print(math.floor(3.7))
+print(math.random(1, 100))
+
 ```
 
 ## Comparaison avec le python
@@ -299,20 +336,38 @@ Voici leut comparaison :
 
 ## utilisation domaine
 
-Lua est le langage numéro 1 du scripting dans l’industrie du jeu :
+#### Lua est le langage numéro 1 du scripting dans l’industrie du jeu :
+
 Roblox (100+ millions d’utilisateurs), CryEngine, WoW Addons, Angry Birds, Baldur’s Gate
+Plusieurs jeux bac à sable utilisent Lua pour la programmation de scripts et l’automatisation. On peut citer Garry’s Mod, Roblox, Core, Stormworks et Minecraft, où le mod ComputerCraft permet de créer des robots et programmes automatisés. Minetest, jeu open-source similaire, utilise Lua pour écrire des extensions et scripts internes.
+Le jeu scientifique Foldit emploie Lua pour que les joueurs automatisent des actions répétitives via des « recettes », certaines ayant conduit à des publications scientifiques.
+Des moteurs comme LÖVE sont entièrement basés sur Lua. De nombreux jeux célèbres l’intègrent, tels que World of Warcraft, Far Cry, Multi Theft Auto, SimCity 4 et Natural Selection 2, ainsi que des mods ou DLC comme The Binding of Isaac: Afterbirth+. Lua est aussi utilisé dans Transformice, Onset, FiveM, Factorio, Project Zomboid, et dans des moteurs comme SourceEngine, Solarus ou des consoles virtuelles comme Pico-8.
 
-Il permet de séparer :
-le moteur (C++), le script du gameplay (Lua), Automatisation / DevOps
 
-Utilisé dans :
-Neovim,OpenResty (Nginx + Lua),AwesomeWM,Redis (scripts Lua dans le serveur),Réseau et cybersécurité,
 
-Lua est intégré dans :
-Wireshark, Nmap (NSE scripts), Suricata, Systèmes embarqués
 
-Grâce à sa taille minuscule, on le retrouve dans :
-microcontrôleurs,robots éducatifs, objets connectés
+#### Aussi dans les logiciel : 
+
+Lua est utilisé pour étendre et automatiser de nombreux logiciels et environnements. On le retrouve dans le lecteur multimédia VLC, les gestionnaires de fenêtres Enlightenment Edje, les éditeurs NeoVim et Awesome, ainsi que pour les modules de MediaWiki.
+
+Il sert aussi dans le développement de jeux et simulations, comme CraftStudio, Orbiter, ou BeamNG.drive, et dans des logiciels scientifiques et neuronaux comme OpenVibe. Lua est utilisé pour créer des plugins (irccd) et dans les systèmes embarqués, notamment OpenWrt et sa GUI LuCI.
+
+Dans la domotique et la gestion de bases de données, Lua est natif de Domoticz et NSBase, permettant l’automatisation et la création de scripts dynamiques. Il est également intégré dans des serveurs comme Prosody, l’environnement de bureau Awesome, et même dans FreeBSD et le logiciel de production multimédia DaVinci Resolve. Le logiciel musical Finale propose également des plugins Lua.
+
+
+#### Pour les reseau embarqueé : 
+
+Dans le domaine réseau, Lua est utilisé pour étendre et automatiser des serveurs web comme Apache, Lighttpd et Nginx (via OpenResty), ainsi que pour l’analyse de paquets avec Wireshark et dans certains routeurs Cisco. Sa légèreté le rend adapté aux systèmes embarqués comme OpenWrt.
+
+Lua est aussi employé pour personnaliser des systèmes téléphoniques (Asterisk) et des outils antispam (Rspamd) via des scripts et interfaces de programmation.
+
+
+#### Et aussi dans nos console de jeux favoris :
+
+Lua a été intégré à la PlayStation Portable (PSP) via plusieurs versions de Lua Player, comme Lua Player HM, Euphoria et Lua Player One, permettant de lancer des applications et des jeux écrits en Lua, y compris en 3D. Certaines versions exploitent des firmwares non officiels pour exécuter des programmes non signés.
+
+Sur la PlayStation Vita, Lua Player Plus (LPP) permet également de créer des jeux. Lua est aussi inclus dans la console open-source Pocket Chip, grâce au programme Pico-8, qui permet de jouer et de développer des jeux en Lua.
+
 
 ## Conclusion
 
