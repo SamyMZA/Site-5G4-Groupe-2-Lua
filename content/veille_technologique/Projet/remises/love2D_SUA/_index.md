@@ -25,7 +25,7 @@ https://love2d.org/
 
 
 
-## Un exemple minimal 
+## 1.1 - Un exemple minimal 
 Créer un fichier `main.lua` :
 
 ```txt
@@ -41,7 +41,7 @@ end
 ```
 ![alt text](hello.png)
 
-## Demarrer un jeu avec Love2D (Drag and Drop)
+## 1.2 - Demarrer un jeu avec Love2D (Drag and Drop)
 
 1. Ouvrir `C:\Program Files\LOVE`
 2. Trouver `love.exe`
@@ -52,7 +52,7 @@ Comme ceci :
 
 ![alt text](drag.png)
 
-Projet-1-Hello → glisser sur love.exe  
+Projet-1-Hello -> glisser sur love.exe  
 Le jeu démarre automatiquement 🎮
 
 ---
@@ -65,7 +65,7 @@ Cette base est essentielle pour tous les jeux 2D, qu’ils soient simples ou ava
 
 ---
 
-## Exemple complet : formes + couleurs
+## 2.1 - Exemple complet : formes + couleurs
 
 Dans cet exemple, on montre comment changer la couleur actuelle du pinceau de dessin, puis comment afficher un rectangle, un cercle et enfin du texte.  
 Love2D redessine l’écran **à chaque frame**, donc tout ce qui doit apparaître visuellement doit être dans `love.draw()`.
@@ -103,7 +103,7 @@ Cet exemple montre trois choses essentielles :
 
 3. Comment afficher du texte (print)
 
-##  Afficher une image
+## 2.2 - Afficher une image
 Pour afficher une image, elle doit être placée dans un dossier accessible au jeu.
 Voici une structure recommandée pour éviter les erreurs de chemin :
 ```txt
@@ -143,7 +143,7 @@ Ce code démontre :
 
 3. Comment afficher l’image dans love.draw()
 
-## Déplacer une image avec une variable
+## 2.3 - Déplacer une image avec une variable
 Dans cet exemple, l'image se déplace automatiquement en modifiant sa position à chaque frame.
 dt permet d’assurer un déplacement fluide et stable même si le nombre de FPS change.
 
@@ -171,7 +171,7 @@ C’est le principe fondamental du mouvement dans presque tous les jeux 2D.
 
 
 ---
-## Quelques exercises pour mettre en pratique cette section
+## 2.4 - Quelques exercises pour mettre en pratique cette section
 
 Les exercices suivants  permettent de pratiquer immédiatement les concepts vus ci-dessus.
 Chaque exercice correspond à une action simple mais essentielle pour se familiariser avec les bases de l’affichage.
@@ -216,7 +216,7 @@ L’objectif est simple : comprendre comment lire les touches, modifier des posi
 
 ---
 
-## 3.1 — Lire les touches avec love.keyboard.isDown
+## 3.1 - Lire les touches avec love.keyboard.isDown
 
 Love2D permet de détecter en continu si une touche est enfoncée grâce à :
 
@@ -277,25 +277,25 @@ end
 Ce code crée un joueur représenté par un cercle et lui permet de se déplacer librement dans toutes les directions en respectant le temps réel (dt).
 
 ---
-## 3.3 — Déplacement diagonal
+## 3.3 - Déplacement diagonal
 
 Comme plusieurs touches peuvent être pressées simultanément, le personnage peut se déplacer en diagonale.
 
 Exemple :
 ```txt
 
-w + d → haut droite
+w + d -> haut droite
 
-w + a → haut gauche
+w + a -> haut gauche
 
-s + d → bas droite
+s + d -> bas droite
 
-s + a → bas gauche
+s + a -> bas gauche
 ```
 Ce comportement est automatiquement géré par le système sans rien de plus à faire.
 
 ---
-## 3.4 — Empêcher le joueur de sortir de l’écran (Clamping)
+## 3.4 - Empêcher le joueur de sortir de l’écran (Clamping)
 
 Pour éviter que le joueur disparaisse hors de la fenêtre, on vérifie constamment s’il dépasse les limites.
 
@@ -321,7 +321,7 @@ Ceci garantit que le joueur reste visible à l’écran en tout temps.
 
 ---
 
-## 3.5 — Exemple complet avec clamping + déplacement
+## 3.5 - Exemple complet avec clamping + déplacement
 
 Voici un exemple propre montrant un déplacement fluide + limites de l’écran :
 
@@ -374,7 +374,7 @@ Cet exemple reflète exactement la logique utilisée dans les vrais jeux : une b
 
 ---
 
-## 3.6 — Exercices pour maîtriser cette section
+## 3.6 - Exercices pour maîtriser cette section
 
 ### Exercice 1 : Déplacement WASD
 
@@ -418,7 +418,7 @@ C’est une méthode simple, rapide et suffisante pour la majorité des jeux 2D 
 
 ---
 
-## 4.1 — Comprendre la collision AABB
+## 4.1 - Comprendre la collision AABB
 
 Deux rectangles `A` et `B` sont en collision si **leurs bords se chevauchent sur les axes X et Y** en même temps.
 
@@ -426,7 +426,7 @@ Love2D ne fournit pas de fonction toute faite, donc on crée notre propre foncti
 
 ---
 
-## 4.2 — Fonction de collision complète
+## 4.2 - Fonction de collision complète
 
 Voici le code que tout le monde utilise pour détecter une collision rectangle vs rectangle :
 
@@ -442,7 +442,7 @@ Si la fonction retourne true, alors il y a contact.
 
 ---
 
-## 4.3 — Exemple complet : joueur vs obstacle
+## 4.3 - Exemple complet : joueur vs obstacle
 
 Voici un petit projet entier montrant un joueur, un obstacle fixe, et un test de collision :
 
@@ -493,7 +493,7 @@ Lorsque les deux se touchent, le texte “Collision !” apparaît.
 
 ---
 
-## 4.4 — Collision cercle vs cercle (optionnel)
+## 4.4 - Collision cercle vs cercle (optionnel)
 
 Si vous utilisez des cercles, voici la version collision circulaire :
 
@@ -512,7 +512,7 @@ Cette méthode est idéale pour les jeux avec boules, projectiles ou ennemis ron
 
 ---
 
-## 4.5 — Exemple : joueur rond vs ennemi rond
+## 4.5 - Exemple : joueur rond vs ennemi rond
 
 ```lua
 
@@ -549,7 +549,7 @@ Sinon il reste vert.
 
 ---
 
-## 4.6 — Exercices pour pratiquer
+## 4.6 - Exercices pour pratiquer
 ### Exercice 1 : Détecter une collision entre joueur et un carré fixe
 
 Changer le message “Collision !” par “Touché !”.
@@ -571,3 +571,249 @@ Créer un joueur rond + un obstacle rond et détecter la collision.
 Créer un tableau obstacles = { ... } et tester tous les obstacles avec une boucle.
 
 ---
+
+# 5. Mouvements automatiques & rebonds
+
+Cette section introduit les mouvements autonomes, c’est-à-dire des objets qui se déplacent sans intervention du joueur.  
+On apprend aussi à faire rebondir un objet sur les murs de la fenêtre, une mécanique essentielle pour créer des ennemis mobiles, des projectiles, ou des objets dynamiques.
+
+Le principe est simple :  
+- l’objet possède une vitesse horizontale (speedX)  
+- l’objet possède une vitesse verticale (speedY)  
+- à chaque frame, on met à jour sa position  
+- si l’objet frappe un mur -> on inverse la direction
+
+---
+
+## 5.1 - Exemple simple : carré qui bouge tout seul
+
+Dans cet exemple, un carré se déplace en diagonale grâce aux vitesses speedX et speedY.
+
+```lua
+local box = {
+    x = 100,
+    y = 100,
+    w = 50,
+    h = 50,
+    speedX = 180,
+    speedY = 140
+}
+
+function love.update(dt)
+    box.x = box.x + box.speedX * dt
+    box.y = box.y + box.speedY * dt
+end
+
+function love.draw()
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle("fill", box.x, box.y, box.w, box.h)
+end
+```
+![alt text](carresolomove.gif)
+
+Ce code donne un mouvement continu, sans contrôle du joueur.
+
+---
+
+## 5.2 - Faire rebondir l’objet sur les murs
+
+On teste les limites :
+
+si l’objet dépasse la gauche -> on inverse speedX
+
+droite -> inverse speedX
+
+haut -> inverse speedY
+
+bas -> inverse speedY
+
+```lua
+local box = {
+    x = 100,
+    y = 100,
+    w = 50,
+    h = 50,
+    speedX = 180,
+    speedY = 140
+}
+
+function love.update(dt)
+    box.x = box.x + box.speedX * dt
+    box.y = box.y + box.speedY * dt
+
+    local screenW = love.graphics.getWidth()
+    local screenH = love.graphics.getHeight()
+
+    if box.x < 0 then
+        box.x = 0
+        box.speedX = -box.speedX
+    end
+
+    if box.x + box.w > screenW then
+        box.x = screenW - box.w
+        box.speedX = -box.speedX
+    end
+
+    if box.y < 0 then
+        box.y = 0
+        box.speedY = -box.speedY
+    end
+
+    if box.y + box.h > screenH then
+        box.y = screenH - box.h
+        box.speedY = -box.speedY
+    end
+end
+
+function love.draw()
+    love.graphics.setColor(1, 0.2, 0.2)
+    love.graphics.rectangle("fill", box.x, box.y, box.w, box.h)
+end
+
+```
+
+![alt text](rebound.gif)
+
+Ce code crée un mouvement “pong-like”, parfait pour un objet autonome.
+
+---
+
+## 5.3 - Exemple avec une image au lieu d’un rectangle
+
+Le même principe, mais avec un sprite :
+
+```lua
+
+local img
+local x = 200
+local y = 120
+local speedX = 150
+local speedY = 190
+local w, h = 0, 0
+
+function love.load()
+    img = love.graphics.newImage("assets/images/player.png")
+    w, h = img:getWidth(), img:getHeight()
+end
+
+function love.update(dt)
+    x = x + speedX * dt
+    y = y + speedY * dt
+
+    local sw = love.graphics.getWidth()
+    local sh = love.graphics.getHeight()
+
+    if x < 0 then
+        x = 0
+        speedX = -speedX
+    end
+    if x + w > sw then
+        x = sw - w
+        speedX = -speedX
+    end
+    if y < 0 then
+        y = 0
+        speedY = -speedY
+    end
+    if y + h > sh then
+        y = sh - h
+        speedY = -speedY
+    end
+end
+
+function love.draw()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(img, x, y)
+end
+```
+![alt text](reboundimg.gif)
+
+
+Un sprite se déplace et rebondit parfaitement dans l’écran.
+
+---
+
+## 5.4 - Ajouter une accélération progressive (optionnel)
+
+Exemple avec vitesse qui augmente graduellement :
+
+```lua
+
+speedX = speedX + 10 * dt
+speedY = speedY + 10 * dt
+
+```
+
+Cela crée un comportement plus chaotique ou plus “vivant”.
+
+---
+
+## 5.5 - Changer de direction aléatoirement
+
+On peut faire changer la direction un peu comme dans des jeux d’ennemis imprévisibles :
+
+```lua
+if math.random() < 0.01 then
+    speedX = speedX * -1
+end
+if math.random() < 0.01 then
+    speedY = speedY * -1
+end
+```
+
+Ce genre de mouvement donne un effet organique ou erratique.
+
+---
+
+## 5.6 - Exercices pour maîtriser cette section
+Exercice 1 : Faire rebondir un carré
+
+Reprendre le premier exemple et ajouter le rebond complet.
+
+Exercice 2 : Faire rebondir une image
+
+Utiliser un sprite à la place d’un rectangle.
+
+Exercice 3 : Ajouter une accélération
+
+Accélération progressive jusqu’à une vitesse max.
+
+Exercice 4 : Mouvement aléatoire
+
+À chaque rebond, changer légèrement la vitesse.
+
+Exercice 5 : Plusieurs objets autonomes
+
+Créer un tableau balls = {} et gérer plusieurs rebonds simultanés.
+
+---
+
+# 6. Gestion d’états
+
+Cette section explique comment structurer un jeu avec différents écrans :
+- un menu
+- une partie en cours
+- un écran de Game Over
+
+Le concept est simple : on utilise une variable `gameState` pour décider ce que le jeu doit afficher et comment il doit réagir.
+
+---
+
+## 6.1 - Principe de base du gameState
+
+On crée une variable qui stocke l’état actuel :
+
+```lua
+local gameState = "menu"
+```
+
+Les états possibles :
+
+"menu"
+
+"game"
+
+"gameover"
+
+Ensuite, on affiche ou met à jour seulement ce qui correspond à cet état :
+
