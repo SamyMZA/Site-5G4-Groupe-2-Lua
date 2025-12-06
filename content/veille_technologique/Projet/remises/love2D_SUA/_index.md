@@ -766,23 +766,23 @@ Ce genre de mouvement donne un effet organique ou erratique.
 ---
 
 ## 5.6 - Exercices pour maîtriser cette section
-Exercice 1 : Faire rebondir un carré
+### Exercice 1 : Faire rebondir un carré
 
 Reprendre le premier exemple et ajouter le rebond complet.
 
-Exercice 2 : Faire rebondir une image
+### Exercice 2 : Faire rebondir une image
 
 Utiliser un sprite à la place d’un rectangle.
 
-Exercice 3 : Ajouter une accélération
+### Exercice 3 : Ajouter une accélération
 
 Accélération progressive jusqu’à une vitesse max.
 
-Exercice 4 : Mouvement aléatoire
+### Exercice 4 : Mouvement aléatoire
 
 À chaque rebond, changer légèrement la vitesse.
 
-Exercice 5 : Plusieurs objets autonomes
+### Exercice 5 : Plusieurs objets autonomes
 
 Créer un tableau balls = {} et gérer plusieurs rebonds simultanés.
 
@@ -809,11 +809,416 @@ local gameState = "menu"
 
 Les états possibles :
 
-"menu"
+ - "menu"
 
-"game"
+ - "game"
 
-"gameover"
+ - "gameover"
 
 Ensuite, on affiche ou met à jour seulement ce qui correspond à cet état :
+```lua
+if gameState == "menu" then
+    ...
+elseif gameState == "game" then
+    ...
+elseif gameState == "gameover" then
+    ...
+end
+```
 
+---
+
+## 6.2 - Exemple complet de structure
+Voici un jeu complet avec menu -> jeu -> game over -> restart :
+
+```lua
+local gameState = "menu"
+local player = {x = 400, y = 300, speed = 200}
+local enemy = {x = 100, y = 100, speed = 100}
+
+function love.keypressed(key)
+    if gameState == "menu" and key == "return" then
+        gameState = "game"
+    end
+
+    if gameState == "gameover" and key == "r" then
+        restartGame()
+    end
+end
+
+function restartGame()
+    player.x, player.y = 400, 300
+    enemy.x, enemy.y = 100, 100
+    gameState = "game"
+end
+
+function checkCollision()
+    local dx = player.x - enemy.x
+    local dy = player.y - enemy.y
+    return dx*dx + dy*dy < 40*40
+end
+
+function love.update(dt)
+    if gameState == "menu" then
+        return
+    end
+
+    if gameState == "game" then
+        if love.keyboard.isDown("w") then player.y = player.y - player.speed * dt end
+        if love.keyboard.isDown("s") then player.y = player.y + player.speed * dt end
+        if love.keyboard.isDown("a") then player.x = player.x - player.speed * dt end
+        if love.keyboard.isDown("d") then player.x = player.x + player.speed * dt end
+
+        local dx = player.x - enemy.x
+        local dy = player.y - enemy.y
+        local dist = math.sqrt(dx*dx + dy*dy)
+
+        enemy.x = enemy.x + (dx/dist) * enemy.speed * dt
+        enemy.y = enemy.y + (dy/dist) * enemy.speed * dt
+
+        if checkCollision() then
+            gameState = "gameover"
+        end
+    end
+end
+
+function love.draw()
+    if gameState == "menu" then
+        love.graphics.printf("MENU\nAppuyez sur ENTREE pour commencer", 0, 220, 800, "center")
+    end
+
+    if gameState == "game" then
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.circle("fill", player.x, player.y, 20)
+
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.circle("fill", enemy.x, enemy.y, 20)
+    end
+
+    if gameState == "gameover" then
+        love.graphics.printf("GAME OVER\nAppuyez sur R pour recommencer", 0, 220, 800, "center")
+    end
+end
+
+```
+![alt text](gameState.gif)
+
+---
+
+## 6.3 - Styliser le menu
+```lua
+if gameState == "menu" then
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.printf("Bienvenue !\nAppuyez sur ENTREE", 0, 220, 800, "center")
+end
+```
+
+---
+
+## 6.4 - Ajouter un compteur de survie
+
+```lua
+local survivalTime = 0
+
+function love.update(dt)
+    if gameState == "game" then
+        survivalTime = survivalTime + dt
+    end
+end
+
+function love.draw()
+    if gameState == "game" then
+        love.graphics.print("Temps : " .. math.floor(survivalTime), 10, 10)
+    end
+end
+```
+
+---
+
+## 6.5 - Game Over avec reset propre
+Pour redémarrer la partie seulement dans l’écran Game Over :
+
+```lua
+function love.keypressed(key)
+    if gameState == "gameover" and key == "r" then
+        restartGame()
+    end
+end
+```
+
+---
+
+## 6.6 - Exercices pour maîtriser cette section
+### Exercice 1 - Améliorer le menu
+Ajouter un titre + instructions + couleurs.
+
+### Exercice 2 - Ajouter une animation dans le menu
+Ex : un carré qui bouge derrière le texte.
+
+### Exercice 3 - Faire un écran de pause
+Ajoutez un état "pause".
+
+### Exercice 4 - Ajouter un compteur de vies
+Quand le joueur touche un ennemi -> perdre une vie -> Game Over quand 0.
+
+### Exercice 5 - Ajouter un écran de victoire
+gameState = "win" si le joueur survit X secondes.
+
+---
+
+# 7.UI : Score, Timer & Interface de Jeu
+
+Dans cette section, nous allons ajouter une véritable interface de jeu (UI) comprenant :
+
+- un **score**
+- un **timer**
+- un **système d'affichage clair dans le coin de l’écran**
+- une **police personnalisée (optionnelle)**
+- une **mise en forme plus élégante** pour donner l’impression d’un vrai jeu vidéo
+
+Ces éléments sont essentiels pour rendre un jeu plus professionnel et plus engageant.
+
+---
+
+## 7.1 - Afficher un timer simple
+
+Un timer mesure combien de temps le joueur survit ou joue.
+Le principe est simple :
+
+- on crée une variable `time`
+- à chaque frame, on ajoute `dt`
+- on affiche le résultat à l’écran
+
+```lua
+local time = 0
+
+function love.update(dt)
+    time = time + dt
+end
+
+function love.draw()
+    love.graphics.print("Temps : " .. math.floor(time), 10, 10)
+end
+```
+![alt text](timer-1.gif) 
+---
+
+## 7.2 - Ajouter un score
+
+Le score peut augmenter avec le temps ou avec les actions du joueur.
+Voici un score qui augmente automatiquement :
+
+```lua
+
+
+local score = 0
+
+function love.update(dt)
+    score = score + 1 * dt
+end
+
+function love.draw()
+    love.graphics.print("Score : " .. math.floor(score), 10, 30)
+end
+
+```
+![alt text](ui-1.png)
+
+On place le score sous le timer pour garder une interface propre.
+
+---
+
+7.3 - Exemple complet : Timer + Score + UI propre
+
+Voici un mini-projet complet avec une interface claire :
+
+```lua
+
+local time = 0
+local score = 0
+
+function love.update(dt)
+    time = time + dt
+    score = score + 5 * dt -- score augmente lentement
+end
+
+function love.draw()
+    -- texte blanc
+    love.graphics.setColor(1, 1, 1)
+
+    -- timer
+    love.graphics.print("Temps : " .. math.floor(time), 10, 10)
+
+    -- score
+    love.graphics.print("Score : " .. math.floor(score), 10, 30)
+
+    -- rappel controls (optionnel)
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.print("WASD pour se déplacer", 10, love.graphics.getHeight() - 30)
+end
+```
+
+## 7.4 - Améliorer l’UI avec une police personnalisée (optionnel)
+
+Love2D permet d’utiliser des polices .ttf (comme dans les vrais jeux).
+
+Structure recommandée :
+
+```txt
+projet/
+    main.lua
+    assets/
+        fonts/
+            font.ttf
+```
+
+
+Charger la police :
+
+```lua
+
+local font
+
+function love.load()
+    font = love.graphics.newFont("assets/fonts/font.ttf", 24)
+    love.graphics.setFont(font)
+end
+```
+
+Le texte sera maintenant plus lisible et plus beau.
+
+---
+
+## 7.5 - Encadrer le score (UI plus “jeu vidéo”)
+
+On peut ajouter un fond semi-transparent derrière l’interface :
+
+```lua
+function love.draw()
+    -- fond noir transparent
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.rectangle("fill", 0, 0, 160, 60)
+
+    -- texte blanc
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Temps : " .. math.floor(time), 10, 10)
+    love.graphics.print("Score : " .. math.floor(score), 10, 30)
+end
+```
+
+Ce genre de design est très courant dans les jeux 2D modernes.
+
+---
+
+## 7.6 - Ajouter un High Score (meilleur score)
+
+Le high score se met à jour automatiquement :
+
+```lua
+
+local score = 0
+local highScore = 0
+
+function love.update(dt)
+    score = score + dt
+end
+
+function love.keypressed(key)
+    if key == "space" then
+        if score > highScore then
+            highScore = score
+        end
+        score = 0
+    end
+end
+
+function love.draw()
+    love.graphics.print("Score : " .. math.floor(score), 10, 10)
+    love.graphics.print("Record : " .. math.floor(highScore), 10, 30)
+end
+```
+
+Ici, on appuie sur espace pour “terminer” la manche et mettre à jour le high score.
+
+---
+
+## 7.7 - Intégrer l’UI dans un vrai jeu (avec gameState)
+
+Voici un exemple d’UI intégrée avec un menu + game + gameover :
+
+```lua
+local gameState = "menu"
+local score = 0
+local time = 0
+local highScore = 0
+
+function love.update(dt)
+    if gameState == "game" then
+        time = time + dt
+        score = score + 5 * dt
+    end
+end
+
+function love.keypressed(key)
+    if gameState == "menu" and key == "return" then
+        time = 0
+        score = 0
+        gameState = "game"
+    end
+
+    if gameState == "gameover" and key == "r" then
+        time = 0
+        score = 0
+        gameState = "game"
+    end
+end
+
+function love.draw()
+    if gameState == "menu" then
+        love.graphics.printf("MENU\nAppuyez sur ENTREE", 0, 200, 800, "center")
+        return
+    end
+
+    if gameState == "game" then
+        -- UI
+        love.graphics.setColor(0, 0, 0, 0.4)
+        love.graphics.rectangle("fill", 0, 0, 180, 60)
+
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print("Temps : " .. math.floor(time), 10, 10)
+        love.graphics.print("Score : " .. math.floor(score), 10, 30)
+    end
+
+    if gameState == "gameover" then
+        love.graphics.printf("GAME OVER\nAppuyez sur R", 0, 200, 800, "center")
+
+        love.graphics.print("Score final : " .. math.floor(score), 10, 10)
+        love.graphics.print("Record : " .. math.floor(highScore), 10, 30)
+    end
+end
+
+```
+
+---
+
+## 7.8 - Exercices pour maîtriser cette section
+
+### Exercice 1 — Compteur de survie
+
+Faire un timer qui s’arrête en gameover.
+
+### Exercice 2 — High Score permanent
+
+Sauver le high score dans un fichier .txt.
+
+### Exercice 3 — Barres de vie (HP bar)
+
+Créer une barre rouge + verte.
+
+### Exercice 4 — UI animée
+
+Faire clignoter le score quand on augmente.
+
+### Exercice 5 — UI minimaliste
+
+Créer une interface noire + blanche style jeux rétro.
