@@ -368,9 +368,16 @@ Lua a été intégré à la PlayStation Portable (PSP) via plusieurs versions de
 
 Sur la PlayStation Vita, Lua Player Plus (LPP) permet également de créer des jeux. Lua est aussi inclus dans la console open-source Pocket Chip, grâce au programme Pico-8, qui permet de jouer et de développer des jeux en Lua.
 
+## L’évolution récente de Lua
+Même si Lua a été crée en 1993, il continue toujours d'évoluer et de rester pertinent dans le monde de la technologie. Les versions récentes du langage ont amélioré la gestion mémoire avec un garbage collector incrémental et plus efficace (depuis Lua 5.4). Cette amélioration le rend encore plus adapté aux systèmes embarqués et aux environnements (appareils) qui ont peu de ressources. Dans le domaine de l'Iot, on retrouve Lua dans de nombreux projets comme dans NodeMCU ou eLua, qui permettent de programmer facilement des microcontrôleurs avec un langage léger et rapide. De ce fait, cette tendance devient de plus en plus importante, surtout dans uneépoque où les objets connectés se multiplient.
+
+Du côté industriel, Lua reste un langage clé grâce à son intégration dans le monde professionnel. Par exemple, OpenResty (qui combine Nginx et Lua), est utilisé pour créer des serveurs web très performants capables de gérer d'énormes charges avec peu de ressources. L'outil LuaRocks, de son côté, facilite l'installation de modules et l'organisation des projets Lua, ce qui aide à renforcer la pérennité du langage.
+
+Aussi, Lua a même eu un rôle important dans l’intelligence artificielle. Avant PyTorch, il existait Torch7, un framework IA très utilisé, et il reposait entièrement sur Lua. Cela montre que même si Lua n'est pas le langage le plus populaire, il reste tout de même un langage qui a largement contribué à des technologies majeures et reste un outil important dans plusieurs domaines spécialisés.
+
 
 ## Conclusion
 
-Lua est un langage unique, minimaliste, mais extrêmement puissant. Sa philosophie est simple : fournir un cœur léger, extensible, qui permet aux développeurs de créer exactement ce dont ils ont besoin. Sa vitesse, sa simplicité, sa portabilité et sa capacité d’intégration dans des applications C/C++ en font l’un des langages les plus utilisés dans l’embarqué, le jeu vidéo, l’automatisation et les environnements nécessitant un langage flexible.
+Enfin, Lua est un langage unique, minimaliste, mais extrêmement puissant. Sa philosophie est simple : fournir un cœur léger, extensible, qui permet aux développeurs de créer exactement ce dont ils ont besoin. Sa vitesse, sa simplicité, sa portabilité et sa capacité d’intégration dans des applications C/C++ en font l’un des langages les plus utilisés dans l’embarqué, le jeu vidéo, l’automatisation et les environnements nécessitant un langage flexible.
 
 Bien qu’il soit peu médiatisé comparé à Python ou JavaScript, Lua reste un outil crucial dans de nombreuses industries grâce à sa stabilité et à son efficacité.
