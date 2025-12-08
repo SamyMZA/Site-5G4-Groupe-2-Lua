@@ -1321,10 +1321,10 @@ Un mini-jeu fonctionnel, stable, fluide, où :
 
 | Ressource / dépôt / tutoriel | Lien | Type / Ce qu’elle apporte |
 |------------------------------|------|---------------------------|
-| LÖVE – site officiel | https://love2d.org/ | Moteur officiel + documentation + base pour démarrer un projet :contentReference[oaicite:1]{index=1} |
-| Documentation LOVE (API) sur DevDocs | https://devdocs.io/love/ | Référence complète des fonctions graphiques, input, audio, etc. — très pratique pour coder :contentReference[oaicite:2]{index=2} |
-| “Beginner Friendly LÖVE Documentation” (non-officiel) | https://janparkio.github.io/love2d-docs/ | Version simple et accessible de la doc, idéale pour débuter sans être noyé :contentReference[oaicite:3]{index=3} |
-| Article “Love2D : l’outil polyvalent pour concevoir jeux 2D rapidement” (en français) | https://jardin-des-slimes.fr/love2d-outil-polyvalent-concevoir-jeux-2d-rapidement/ | Présentation claire de Love2D + ses avantages + exemples généraux — bon point de départ en français :contentReference[oaicite:4]{index=4} |
-| Dépôt `tombatossals/love2d-examples` (GitHub) | https://github.com/tombatossals/love2d-examples | Recueil d’exemples simples et bien documentés (effet pluie, étoiles, etc.), parfait pour apprendre via le code :contentReference[oaicite:5]{index=5} |
-| Tutoriel vidéo “Game Development with LÖVE 2D and Lua – Full Course” (YouTube) | https://www.youtube.com/watch?v=I549C6SmUnk | Tutoriel vidéo complet : de Lua à Love2D + création de jeux complets (menus, sprites, collisions…) :contentReference[oaicite:10]{index=6} |
+| LÖVE – site officiel | https://love2d.org/ | Moteur officiel + documentation + base pour démarrer un projet |
+| Documentation LOVE (API) sur DevDocs | https://devdocs.io/love/ | Référence complète des fonctions graphiques, input, audio, etc.|
+| “Beginner Friendly LÖVE Documentation” (non-officiel) | https://janparkio.github.io/love2d-docs/ | Version simple et accessible de la doc, idéale pour débuter sans être noyé  |
+| Article “Love2D : l’outil polyvalent pour concevoir jeux 2D rapidement” (en français) | https://jardin-des-slimes.fr/love2d-outil-polyvalent-concevoir-jeux-2d-rapidement/ | Présentation claire de Love2D + ses avantages + exemples généraux|
+| Dépôt `tombatossals/love2d-examples` (GitHub) | https://github.com/tombatossals/love2d-examples | Recueil d’exemples simples et bien documentés (effet pluie, étoiles, etc.), parfait pour apprendre via le code |
+| Tutoriel vidéo “Game Development with LÖVE 2D and Lua – Full Course” (YouTube) | https://www.youtube.com/watch?v=I549C6SmUnk | Tutoriel vidéo complet : de Lua à Love2D + création de jeux complets (menus, sprites, collisions…) |
 
