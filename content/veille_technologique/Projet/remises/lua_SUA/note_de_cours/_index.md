@@ -3,7 +3,7 @@ title = "Notes de cours - LUA"
 weight = 2
 +++
 
-## Ques ce que LUA ?
+## Qu'est ce que LUA ?
 
 Lua est un langage de programmation polyvalent, créé par Bjarne Stroustrup pour etandare le language c a de la programmation orienté objet tout en gardant les performance du C.
 il est léger, rapide et flexible, pensé pour être intégré à d’autres logiciels plutôt que d’être utilisé comme un langage autonome. Créé en 1993 au sein de l’Université Pontificale Catholique de Rio de Janeiro, Lua a gagné une popularité mondiale en raison de son efficacité, de sa simplicité et de sa capacité unique à s’intégrer dans des projets écrits en C et C++.
