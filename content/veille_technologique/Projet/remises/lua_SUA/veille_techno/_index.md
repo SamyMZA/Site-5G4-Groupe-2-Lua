@@ -1,27 +1,73 @@
 +++
+archetype = "chapter"
 title = "Veille technologique"
-weight = 1
+weight = 3
+
+[params]
+  menuPre = '<i class="fa-solid fa-gears"></i> '
 +++
 
-## C’est quoi Lua ? 
+## Qu'est-ce qu'une veille technologique?
 
-Selon le modèle 5.1 de ChatGPT 5.1 : “Lua est un langage de programmation léger, rapide et polyvalent, créé au Brésil en 1993. Son nom signifie « lune » en portugais. Il est surtout utilisé pour l’extension et la personnalisation de logiciels, plutôt que pour des applications autonomes complexes.” 
+Définition donnée par l’AFNOR dans sa norme XP X 50-53 sur la veille informationnelle : « activité continue en grande partie itérative visant à une surveillance active de l’environnement technologique, commercial, etc., pour en anticiper les évolutions ».
 
- <!-- ![alt text](lualogo.png) -->
+Le cycle de veille est composé de quatre étapes principales :
+- le ciblage
+- la collecte
+- le traitement et l’analyse
+- la diffusion
 
-## Analyse critique
+## La collecte d'information
 
-La réponse est globalement  correcte, mais incomplète. Certaines caractéristiques importantes de Lua n’ont pas été mentionnées : 
+> [!warning] Attention
+> Quelles sont vos sources ? Est-ce que c'est du contenu sponsorisé ? Il y a-t-il des conflits d'intérêt ? À quel points les sources sont fiable (travail en amont) ? Il y a t il un biais affiché (pro open source, pro IA, anti IA...) ?
 
-Lua est largement utilisé dans le monde du jeu vidéo, notamment sur la plateforme Roblox, qui utilise Luau, un dialecte dérivé de Lua. 
+Il est important d'avoir des sources diversifiées et d'automatiser / centraliser l'accès à ces sources.
 
-Lua est écrit en C, ce qui le rend très compatible avec de nombreux systèmes et logiciels. 
+### Sites de nouvelles
+**Sites internationaux grand public :**
+- The Verge : https://www.theverge.com
+- Wired : https://www.wired.com
+- TechCrunch : https://techcrunch.com
 
-Lua possède un garbage collector, qui facilite la gestion de la mémoire automatique. 
+**Sites internationaux un peu plue spécialisé :**
+- os news : https://www.osnews.com/
+- Tom's hardware : https://www.tomshardware.com/
+- O'Reilly Radar : https://www.oreilly.com/radar
+- Hacker Noon : https://hackernoon.com
 
+**Blogs d'entreprises tech :**
+- AWS Blog : https://aws.amazon.com/blogs
+- Facebook Engineering : https://engineering.fb.com
+- Microsoft Developer Blog : https://devblogs.microsoft.com
+- Google Developers Blog : https://developers.googleblog.com
 
+#### Automatisation avec les flux RSS
+Plutôt que de consulter directement les sites, vous pouvez agréger tous les flux de nouvelles avec des flux rss, souvent signifié avec ces icônes :
+<i class="fa-solid fa-rss"></i>
+<i class="fa-solid fa-square-rss"></i>
 
-## Source
-- https://fr.wikipedia.org/wiki/LuaA 
+Vous pouvez ensuite assembler ces flux dans un lecteur de flux rss tel que https://feedly.com/.
 
-- https://www.d-booker.fr/content/8-introduction-langage-script-lua?srsltid=AfmBOopXWyfz9iPR7u60z2Vk_PLCUolvUEW72-QcWhjbb-bScnFsuBDa 
+### Réseaux sociaux / chaines youtube
+
+Vous pouvez également suivre des personnalités reconnues d'un domaine précis, mais faites très attention aux propos tenu sur les réseaux sociaux, 90% des contenus sont à but promotionnel. Quand Sam Altman dit quelque chose, c'est qu'il veut vous vendre un nouvel abonnement, augmenter les tarifs, ou encore faire avancer une de ses compagnies partenaire.
+
+Chercher de préférence un développeur du domaine d'intérêt : en sécurité, en embarqué, en IA etc...
+
+### Publications scientifiques
+Pour les sujets plus de pointe, parfois la littérature scientifique peut s'avérer nécessaire. Un bon point de départ est [Google Scholar](https://scholar.google.com/)
+
+Vous pouvez automatiser vos sujets de recherches grâces aux alertes.
+
+### GIT
+Surveiller l'activité des projets open source est aussi une bonne source, les grosses plateformes telles que github ou gitlab propose des `topics` que vous pouvez explorer, par exemple :
+- https://github.com/topics/ai
+- https://gitlab.com/explore/projects/topics/android
+
+> Ça peut aussi être une source d'inspiration pour le projet.
+
+### Sources humaines
+
+Il ne faut pas négliger les sources humaines. Les individus détiennent des informations qui sont potentiellement très récentes ou même non encore publiées. Leur expertise peut aussi aider à déterminer rapidement si une information est pertinente ou non.
+

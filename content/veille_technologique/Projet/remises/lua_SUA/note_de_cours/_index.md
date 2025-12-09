@@ -1,5 +1,5 @@
 +++
-title = "Notes de cours - LUA"
+title = "note de cours LUA"
 weight = 2
 +++
 
